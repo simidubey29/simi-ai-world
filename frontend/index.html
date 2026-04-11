@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Talk to Simi 💬</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-wrap">
+    <header class="top-nav">
+      <div class="nav-logo">Simi 💅</div>
+      <nav>
+        <a href="/games">Games</a>
+        <a href="/confess">Confess 💌</a>
+      </nav>
+    </header>
+
+    <div class="chat-container">
+      <div class="chat-status">
+        <div class="status-dot"></div>
+        <span>Simi is online</span>
+      </div>
+      <div class="messages" id="messages">
+        <div class="msg bot">
+          <div class="bubble">arre yaar finally aaye 😭 kya chal rha hai? 👀</div>
+        </div>
+      </div>
+      <div class="chat-input-row">
+        <input type="text" id="input" placeholder="bolo kuch toh..." autocomplete="off" />
+        <button id="send-btn">Send</button>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

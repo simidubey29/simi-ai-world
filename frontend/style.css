@@ -1,0 +1,71 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9f5ff; color: #1a1a2e; min-height: 100vh; }
+
+.page-wrap { max-width: 680px; margin: 0 auto; padding: 0 1rem 2rem; }
+
+.top-nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid #e8e0f7; margin-bottom: 1.5rem; }
+.nav-logo { font-size: 18px; font-weight: 600; color: #6a3ea1; }
+.top-nav nav a { margin-left: 1.2rem; text-decoration: none; color: #6a3ea1; font-size: 14px; font-weight: 500; }
+.top-nav nav a:hover { text-decoration: underline; }
+
+.chat-container { background: white; border-radius: 16px; border: 1px solid #e8e0f7; overflow: hidden; box-shadow: 0 2px 16px rgba(106,62,161,0.08); }
+.chat-status { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid #f0eaff; font-size: 13px; color: #555; background: #faf7ff; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; }
+
+.messages { padding: 1rem; min-height: 400px; max-height: 65vh; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+.msg { display: flex; }
+.msg.user { justify-content: flex-end; }
+.bubble { max-width: 75%; padding: 10px 14px; border-radius: 18px; font-size: 15px; line-height: 1.5; }
+.msg.bot .bubble { background: #f0eaff; color: #2d1b69; border-bottom-left-radius: 4px; }
+.msg.user .bubble { background: #6a3ea1; color: white; border-bottom-right-radius: 4px; }
+.msg.typing .bubble { color: #9b7ec8; font-style: italic; }
+
+.chat-input-row { display: flex; padding: 12px; gap: 8px; border-top: 1px solid #f0eaff; }
+.chat-input-row input { flex: 1; padding: 10px 14px; border: 1px solid #e0d5f5; border-radius: 24px; font-size: 15px; outline: none; }
+.chat-input-row input:focus { border-color: #9b7ec8; }
+.chat-input-row button { background: #6a3ea1; color: white; border: none; padding: 10px 20px; border-radius: 24px; cursor: pointer; font-size: 14px; font-weight: 500; }
+.chat-input-row button:hover { background: #5a2d91; }
+
+.page-title { font-size: 22px; font-weight: 600; margin-bottom: 1.2rem; color: #2d1b69; }
+.game-card { background: white; border-radius: 14px; border: 1px solid #e8e0f7; padding: 1.2rem; margin-bottom: 1rem; }
+.game-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; color: #2d1b69; }
+.game-card p { font-size: 13px; color: #666; margin-bottom: 12px; }
+.input-row, .btn-row { display: flex; gap: 8px; margin-bottom: 10px; }
+.input-row input { flex: 1; padding: 9px 12px; border: 1px solid #e0d5f5; border-radius: 10px; font-size: 14px; outline: none; }
+.game-card button { background: #6a3ea1; color: white; border: none; padding: 9px 16px; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: 500; }
+.game-card button:hover { background: #5a2d91; }
+.result-box { background: #f9f5ff; border-radius: 10px; padding: 12px 14px; font-size: 14px; color: #2d1b69; min-height: 40px; line-height: 1.6; display: none; }
+.result-box.show { display: block; }
+.wyr-options { display: flex; gap: 10px; margin-top: 10px; }
+.wyr-opt { flex: 1; background: #f0eaff; border-radius: 10px; padding: 12px; font-size: 13px; text-align: center; color: #2d1b69; }
+
+.confession-wrap { text-align: center; padding-top: 1rem; }
+.confession-wrap h2 { font-size: 24px; margin-bottom: 6px; color: #2d1b69; }
+.confession-wrap .sub { font-size: 14px; color: #888; margin-bottom: 1.5rem; }
+.card { background: white; border-radius: 14px; border: 1px solid #e8e0f7; padding: 1.5rem; text-align: left; }
+.card input, .card textarea { width: 100%; padding: 10px 12px; border: 1px solid #e0d5f5; border-radius: 10px; font-size: 14px; margin-bottom: 12px; outline: none; font-family: inherit; resize: vertical; }
+.card button { width: 100%; background: #6a3ea1; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: 500; cursor: pointer; }
+#conf-status { text-align: center; margin-top: 10px; font-size: 14px; color: #6a3ea1; }
+
+.login-wrap { max-width: 360px; margin: 4rem auto; text-align: center; background: white; padding: 2rem; border-radius: 16px; border: 1px solid #e8e0f7; }
+.login-wrap h2 { margin-bottom: 1rem; color: #2d1b69; }
+.login-wrap input { width: 100%; padding: 10px 12px; border: 1px solid #e0d5f5; border-radius: 10px; font-size: 15px; margin-bottom: 10px; outline: none; }
+.login-wrap button { width: 100%; background: #6a3ea1; color: white; border: none; padding: 11px; border-radius: 10px; font-size: 15px; cursor: pointer; font-weight: 500; }
+
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+.stat-card { background: white; border: 1px solid #e8e0f7; border-radius: 12px; padding: 1rem; text-align: center; }
+.stat-card .num { font-size: 26px; font-weight: 600; color: #6a3ea1; }
+.stat-card .lbl { font-size: 12px; color: #888; margin-top: 2px; }
+
+.confession-item { background: white; border: 1px solid #e8e0f7; border-radius: 12px; padding: 1rem; margin-bottom: 10px; position: relative; }
+.confession-item.unread { border-left: 3px solid #6a3ea1; }
+.confession-item .name { font-size: 12px; color: #9b7ec8; font-weight: 500; }
+.confession-item .msg { font-size: 14px; margin: 6px 0; color: #2d1b69; }
+.confession-item .time { font-size: 11px; color: #aaa; }
+.confession-item .actions { display: flex; gap: 6px; margin-top: 8px; }
+.confession-item button { font-size: 11px; padding: 4px 10px; border-radius: 6px; border: 1px solid #e0d5f5; background: transparent; cursor: pointer; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #f9f5ff; padding: 10px; text-align: left; font-weight: 500; color: #6a3ea1; border-bottom: 1px solid #e8e0f7; }
+td { padding: 10px; border-bottom: 1px solid #f5f0ff; color: #333; }
+tr:hover td { background: #faf7ff; }

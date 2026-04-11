@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Games with Simi 🎮</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="page-wrap">
+    <header class="top-nav">
+      <div class="nav-logo"><a href="/">← Simi</a></div>
+    </header>
+
+    <h2 class="page-title">Games 🎮</h2>
+
+    <!-- Roast Generator -->
+    <div class="game-card">
+      <h3>🔥 Roast Generator</h3>
+      <p>Enter your friend's name and let Simi roast them</p>
+      <div class="input-row">
+        <input type="text" id="roast-name" placeholder="friend's name..." />
+        <button onclick="getRoast()">Roast them 💀</button>
+      </div>
+      <div class="result-box" id="roast-result"></div>
+    </div>
+
+    <!-- Truth or Dare -->
+    <div class="game-card">
+      <h3>🎯 Truth or Dare</h3>
+      <div class="btn-row">
+        <button onclick="getTruthOrDare('truth')">Truth 🤭</button>
+        <button onclick="getTruthOrDare('dare')">Dare 😈</button>
+      </div>
+      <div class="result-box" id="tod-result"></div>
+    </div>
+
+    <!-- Would You Rather -->
+    <div class="game-card">
+      <h3>🤔 Would You Rather</h3>
+      <button onclick="getWYR()">New question</button>
+      <div class="wyr-options" id="wyr-result"></div>
+    </div>
+
+    <!-- Know Simi Quiz -->
+    <div class="game-card">
+      <h3>🧠 How well do you know Simi?</h3>
+      <div id="quiz-area">
+        <button onclick="startQuiz()">Start Quiz</button>
+      </div>
+    </div>
+  </div>
+  <script src="games.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simi Admin</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="page-wrap">
+    <div id="login-screen" class="login-wrap">
+      <h2>Admin Login 🔐</h2>
+      <input type="password" id="pass-input" placeholder="password..." />
+      <button onclick="adminLogin()">Enter</button>
+      <div id="login-err" style="color:red;margin-top:8px;"></div>
+    </div>
+    <div id="admin-panel" style="display:none">
+      <header class="top-nav">
+        <div class="nav-logo">Simi Admin 👁</div>
+        <nav>
+          <a href="#" onclick="showTab('confessions')">Confessions</a>
+          <a href="#" onclick="showTab('chats')">Chats</a>
+          <a href="#" onclick="showTab('roasts')">Roasts</a>
+          <a href="#" onclick="showTab('scores')">Quiz Scores</a>
+        </nav>
+      </header>
+      <div class="stats-row" id="stats-row"></div>
+      <div id="tab-content"></div>
+    </div>
+  </div>
+  <script src="admin.js"></script>
+</body>
+</html>
