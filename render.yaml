@@ -7,7 +7,7 @@ services:
     envVars:
       - key: ANTHROPIC_API_KEY
         sync: false
-      - key: mongodb://Simi:simi1010@ac-pmn6mkl-shard-00-00.svn6vsb.mongodb.net:27017,ac-pmn6mkl-shard-00-01.svn6vsb.mongodb.net:27017,ac-pmn6mkl-shard-00-02.svn6vsb.mongodb.net:27017/?ssl=true&replicaSet=atlas-13m5ww-shard-0&authSource=admin&appName=Cluster0
+      - key: MONGODB_URI
         sync: false
       - key: ADMIN_PASSWORD
         sync: false
