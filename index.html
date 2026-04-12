@@ -1,12 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Live Server Starter</title>
-</head>
-<body>
-  <h1>Live Server is ready!</h1>
-  <p>Edit this file and save to see live reload in action.</p>
-</body>
-</html>
+<h1>Simi AI Chatbot</h1>
+<input type="text" id="msg" />
+<button onclick="send()">Send</button>
+
+<script>
+async function send() {
+  const msg = document.getElementById("msg").value;
+
+  const res = await fetch("https://your-backend.onrender.com/api/chat", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ message: msg })
+  });
+
+  const data = await res.json();
+  alert(data.reply);
+}
+</script>
