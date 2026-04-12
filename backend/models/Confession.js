@@ -1,9 +1,8 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
-const confessionSchema = new mongoose.Schema({
-  message: { type: String, required: true, trim: true },
-  sender_name: { type: String, default: 'Anonymous', trim: true },
-  is_read: { type: Boolean, default: false }
-}, { timestamps: true });
+const schema = new mongoose.Schema({
+  text: String,
+  createdAt: { type: Date, default: Date.now }
+});
 
-module.exports = mongoose.model('Confession', confessionSchema);
+export default mongoose.model("Confession", schema);

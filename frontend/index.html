@@ -1,37 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Talk to Simi 💬</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="page-wrap">
-    <header class="top-nav">
-      <div class="nav-logo">Simi 💅</div>
-      <nav>
-        <a href="/games">Games</a>
-        <a href="/confess">Confess 💌</a>
-      </nav>
-    </header>
+  <title>Simi AI 💖</title>
+  <style>
+    body {
+      background: #0f172a;
+      color: white;
+      font-family: Arial;
+      display: flex;
+      justify-content: center;
+    }
 
-    <div class="chat-container">
-      <div class="chat-status">
-        <div class="status-dot"></div>
-        <span>Simi is online</span>
-      </div>
-      <div class="messages" id="messages">
-        <div class="msg bot">
-          <div class="bubble">arre yaar finally aaye 😭 kya chal rha hai? 👀</div>
-        </div>
-      </div>
-      <div class="chat-input-row">
-        <input type="text" id="input" placeholder="bolo kuch toh..." autocomplete="off" />
-        <button id="send-btn">Send</button>
-      </div>
-    </div>
-  </div>
-  <script src="app.js"></script>
+    .app {
+      width: 400px;
+      margin-top: 20px;
+      background: #1e293b;
+      border-radius: 15px;
+      padding: 15px;
+    }
+
+    .chat {
+      height: 300px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+
+    .bubble {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 10px;
+      max-width: 70%;
+    }
+
+    .user {
+      background: #3b82f6;
+      margin-left: auto;
+    }
+
+    .bot {
+      background: #334155;
+    }
+
+    input {
+      width: 65%;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+    }
+
+    button {
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      margin: 3px;
+      cursor: pointer;
+    }
+
+    .send {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .confess {
+      background: linear-gradient(45deg,#ff4d6d,#ff758f);
+      color: white;
+    }
+
+    .game {
+      background: #22c55e;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+<h2>💬 Simi AI Chat</h2>
+
+<div id="chat" class="chat"></div>
+
+<input id="msg" placeholder="Type message..." />
+<button class="send" onclick="send()">Send 🚀</button>
+
+<hr>
+
+<h3>🎮 Play</h3>
+<button class="game" onclick="truth()">Truth 🤫</button>
+<button class="game" onclick="dare()">Dare 😈</button>
+
+<hr>
+
+<h3>💌 Secret Confession</h3>
+<input id="confession" placeholder="Write your secret..." />
+<button class="confess" onclick="sendConfession()">💖 Whisper</button>
+
+</div>
+
+<script>
+
+const API = "https://simi-ai-world-2.onrender.com"; // 🔴 change if needed
+
+function addMessage(text, type) {
+  const chat = document.getElementById("chat");
+  const div = document.createElement("div");
+  div.className = "bubble " + type;
+  div.innerText = text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+async function send() {
+  const msg = document.getElementById("msg").value;
+  if (!msg) return;
+
+  addMessage(msg, "user");
+
+  try {
+    const res = await fetch(API + "/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message: msg })
+    });
+
+    const data = await res.json();
+
+    setTimeout(() => {
+      addMessage(data.reply, "bot");
+    }, 800);
+
+  } catch {
+    addMessage("Server error ❌", "bot");
+  }
+
+  document.getElementById("msg").value = "";
+}
+
+async function sendConfession() {
+  const text = document.getElementById("confession").value;
+
+  await fetch(API + "/api/confession", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ text })
+  });
+
+  alert("💖 Your secret is saved...");
+}
+
+async function truth() {
+  const res = await fetch(API + "/api/game/truth");
+  const data = await res.json();
+  addMessage("Truth: " + data.question, "bot");
+}
+
+async function dare() {
+  const res = await fetch(API + "/api/game/dare");
+  const data = await res.json();
+  addMessage("Dare: " + data.question, "bot");
+}
+
+</script>
+
 </body>
 </html>
