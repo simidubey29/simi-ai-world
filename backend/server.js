@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 dotenv.config();
+const app = express();
 
 // 🔥 Gemini init AFTER dotenv
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
