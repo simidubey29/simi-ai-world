@@ -100,7 +100,7 @@
 
 <script>
 
-const API = "https://simi-ai-world1.onrender.com"; // 🔴 change if needed
+const API = "https://simi-ai-world1.onrender.com"; // ✅ correct backend
 
 function addMessage(text, type) {
   const chat = document.getElementById("chat");
@@ -112,15 +112,20 @@ function addMessage(text, type) {
 }
 
 async function send() {
-  const msg = document.getElementById("msg").value;
+  const msgInput = document.getElementById("msg");
+  const msg = msgInput.value.trim();
   if (!msg) return;
 
   addMessage(msg, "user");
+  msgInput.value = "";
+
+  // 👉 typing indicator
+  const typing = document.createElement("div");
+  typing.className = "bubble bot";
+  typing.innerText = "Simi is typing...";
+  document.getElementById("chat").appendChild(typing);
 
   try {
-    // 👉 show typing
-   addMessage("Simi is typing...", "bot");
-
     const res = await fetch(API + "/api/chat", {
       method: "POST",
       headers: {
@@ -131,44 +136,60 @@ async function send() {
 
     const data = await res.json();
 
-    // 👉 remove "Typing..."
-    document.getElementById("chat").lastChild.remove();
+    // remove typing safely
+    typing.remove();
 
-    // 👉 show real reply
-    addMessage(data.reply, "bot");
+    // show reply safely
+    addMessage(data.reply || "Hmm… something went wrong 😅", "bot");
 
-  } catch {
+  } catch (err) {
+    typing.remove();
     addMessage("Server error ❌", "bot");
+    console.log(err);
   }
-
-  document.getElementById("msg").value = "";
 }
 
-
 async function sendConfession() {
-  const text = document.getElementById("confession").value;
+  const input = document.getElementById("confession");
+  const text = input.value.trim();
 
-  await fetch(API + "/api/confession", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ text })
-  });
+  if (!text) return alert("Write something 😏");
 
-  alert("🤫 Don’t worry… your secret is safe with me. I don’t spill things easily 😌");
+  try {
+    await fetch(API + "/api/confession", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ text })
+    });
+
+    alert("🤫 Don’t worry… your secret is safe 😌");
+    input.value = "";
+
+  } catch {
+    alert("Error sending confession ❌");
+  }
 }
 
 async function truth() {
-  const res = await fetch(API + "/api/game/truth");
-  const data = await res.json();
-  addMessage("Truth: " + data.question, "bot");
+  try {
+    const res = await fetch(API + "/api/game/truth");
+    const data = await res.json();
+    addMessage("Truth: " + data.question, "bot");
+  } catch {
+    addMessage("Game error ❌", "bot");
+  }
 }
 
 async function dare() {
-  const res = await fetch(API + "/api/game/dare");
-  const data = await res.json();
-  addMessage("Dare: " + data.question, "bot");
+  try {
+    const res = await fetch(API + "/api/game/dare");
+    const data = await res.json();
+    addMessage("Dare: " + data.question, "bot");
+  } catch {
+    addMessage("Game error ❌", "bot");
+  }
 }
 
 </script>
