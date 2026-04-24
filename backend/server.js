@@ -8,7 +8,9 @@ dotenv.config();
 const app = express();
 
 // ✅ FIX 1: middleware
-app.use(cors());
+app.use(cors({
+  origin: "*"
+}));
 app.use(express.json());
 
 // ✅ FIX 2: MongoDB connection

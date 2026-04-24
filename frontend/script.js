@@ -1,6 +1,9 @@
 let userId = "";
 
-// ✅ LOGIN FIXED
+// ✅ YOUR DEPLOYED BACKEND URL
+const BASE_URL = "https://simi-ai-world-2.onrender.com";
+
+// ✅ LOGIN
 async function login() {
   let name = document.getElementById("username").value.trim();
 
@@ -10,9 +13,9 @@ async function login() {
   }
 
   try {
-    let res = await fetch("http://localhost:5000/login", {
+    let res = await fetch(`${BASE_URL}/login`, {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name })
     });
 
@@ -20,12 +23,12 @@ async function login() {
 
     userId = data.userId;
 
-    // Switch UI
     document.getElementById("loginScreen").classList.add("hidden");
     document.getElementById("chatScreen").classList.remove("hidden");
 
   } catch (err) {
-    alert("Backend not running 😢");
+    alert("Server not reachable 😢");
+    console.log(err);
   }
 }
 
@@ -47,9 +50,9 @@ async function sendMessage() {
   input.value = "";
 
   try {
-    let res = await fetch("http://localhost:5000/chat", {
+    let res = await fetch(`${BASE_URL}/chat`, {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: text, userId })
     });
 
@@ -58,7 +61,8 @@ async function sendMessage() {
     box.innerHTML += `<div class="bot">${data.reply}</div>`;
     box.scrollTop = box.scrollHeight;
 
-  } catch {
+  } catch (err) {
+    console.log(err);
     box.innerHTML += `<div class="bot">Simi offline 😢</div>`;
   }
 }
