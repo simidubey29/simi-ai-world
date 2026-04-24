@@ -1,3 +1,4 @@
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -6,6 +7,11 @@ import mongoose from "mongoose";
 dotenv.config();
 
 const app = express();
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-1.5-flash"
+});
 
 // ✅ FIX 1: middleware
 app.use(cors({
@@ -33,51 +39,35 @@ app.get("/test", (req, res) => {
 });
 
 // 🤖 CHAT (NO AI for now → debugging first)
-app.post("/api/chat", (req, res) => {
-  const msg = req.body.message.toLowerCase();
+app.post("/api/chat", async (req, res) => {
+  try {
+    const userMsg = req.body.message;
 
-  let reply = "";
+    const prompt = `
+You are Simi, a witty, slightly sarcastic, flirty AI girl.
 
-  // 🔥 Hindi detection
-  const isHindi = /[अ-ह]/.test(msg);
+Rules:
+- Never repeat user message
+- Reply short and natural
+- Be playful, थोड़ा attitude 😏
+- If user speaks Hindi → reply in Hindi/Hinglish
+- If English → reply in English
+- Sound human, not robotic
+- No "as an AI" lines
 
-  // 🔥 Basic smart replies
-  if (msg.includes("hello") || msg.includes("hi")) {
-    reply = isHindi 
-      ? "Hi… itni jaldi yaad aa gayi meri? 😏"
-      : "Oh hello… finally you remembered me 😌";
-  }
-  else if (msg.includes("love")) {
-    reply = isHindi
-      ? "Pyaar? risky game hai… sure ho? 😏"
-      : "Love? hmm… dangerous topic 😏";
-  }
-  else if (msg.includes("sad") || msg.includes("cry")) {
-    reply = isHindi
-      ? "Acha… drama chal raha hai ya sach mein sad ho? 😐"
-      : "Oh… sad huh? real or just attention seeking? 👀";
-  }
-  else if (msg.includes("who are you")) {
-    reply = "Main Simi hoon… AI bhi, attitude bhi 😌";
-  }
-  else {
-    // 🔥 fallback (important)
-    const replies = isHindi
-      ? [
-          "Haan haan samajh gayi… continue karo 😌",
-          "Interesting… aur bolo 😏",
-          "Tum bolte jao, main judge karti rahungi 😌"
-        ]
-      : [
-          "Hmm… interesting. Go on 😌",
-          "I see… continue 👀",
-          "You talk a lot… I like that 😏"
-        ];
+User: ${userMsg}
+Simi:
+`;
 
-    reply = replies[Math.floor(Math.random() * replies.length)];
-  }
+    const result = await model.generateContent(prompt);
+    const response = result.response.text();
 
-  res.json({ reply });
+    res.json({ reply: response });
+
+  } catch (err) {
+    console.log(err);
+    res.json({ reply: "Ugh… something broke. Try again 😒" });
+  }
 });
 
 // 💌 CONFESSION SAVE
