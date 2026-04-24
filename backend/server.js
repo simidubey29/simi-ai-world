@@ -1,19 +1,17 @@
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+dotenv.config();
+
+// 🔥 Gemini init AFTER dotenv
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const model = genAI.getGenerativeModel({
   model: "gemini-1.5-flash"
 });
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import mongoose from "mongoose";
-
-dotenv.config();
-
-const app = express();
-
 
 // ✅ FIX 1: middleware
 app.use(cors({
@@ -57,18 +55,26 @@ Simi:
 `;
 
     const result = await model.generateContent(prompt);
+    
+    console.log("AI RAW:", JSON.stringify(result, null, 2));
 
-    // 🔥 FIXED extraction
-    const reply = result.response.candidates[0].content.parts[0].text;
+    // ✅ SAFE extraction (NO CRASH)
+    let reply = "";
+
+    if (result?.response?.candidates?.length > 0) {
+      const parts = result.response.candidates[0].content.parts;
+      reply = parts.map(p => p.text).join("");
+    } else {
+      reply = "Hmm… didn’t get that, say again 😏";
+    }
 
     res.json({ reply });
 
   } catch (err) {
-    console.log("AI ERROR:", err);
-    res.json({ reply: "Hmm… I’m thinking, try again 😏" });
+    console.log("AI ERROR FULL:", err); // 🔥 IMPORTANT for debugging
+    res.json({ reply: "Okay wait… brain lag ho gaya 😵 try again" });
   }
 });
-
 // 💌 CONFESSION SAVE
 app.post("/api/confession", async (req, res) => {
   try {
