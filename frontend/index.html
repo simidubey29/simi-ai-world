@@ -119,7 +119,7 @@ async function send() {
 
   try {
     // 👉 show typing
-    addMessage("Typing...", "bot");
+   addMessage("Simi is typing...", "bot");
 
     const res = await fetch(API + "/api/chat", {
       method: "POST",
@@ -156,7 +156,7 @@ async function sendConfession() {
     body: JSON.stringify({ text })
   });
 
-  alert("💖 Your secret is saved...");
+  alert("🤫 Don’t worry… your secret is safe with me. I don’t spill things easily 😌");
 }
 
 async function truth() {
