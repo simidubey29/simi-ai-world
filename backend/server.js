@@ -7,11 +7,14 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 dotenv.config();
 const app = express();
 
+app.use(cors());
+app.use(express.json());
+
 // 🔥 Gemini init AFTER dotenv
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const model = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash"
+  model: "gemini-pro"
 });
 
 // ✅ FIX 1: middleware
