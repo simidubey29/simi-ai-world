@@ -61,7 +61,9 @@ app.get("/api/confession", async (req, res) => {
 
 // 🚀 START
 const PORT = process.env.PORT || 3000;
-
+app.get("/", (req, res) => {
+  res.send("Simi AI Backend Running 😏");
+});
 app.listen(PORT, () => {
   console.log("Running on " + PORT);
 });
