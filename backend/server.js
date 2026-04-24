@@ -7,8 +7,6 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 dotenv.config();
 const app = express();
 
-app.use(cors());
-app.use(express.json());
 
 // 🔥 Gemini init AFTER dotenv
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -22,6 +20,7 @@ app.use(cors({
   origin: "*"
 }));
 app.use(express.json());
+
 
 // ✅ FIX 2: MongoDB connection
 console.log("ENV CHECK:", process.env.MONGO_URI);
