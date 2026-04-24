@@ -1,4 +1,10 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-1.5-flash"
+});
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -7,11 +13,7 @@ import mongoose from "mongoose";
 dotenv.config();
 
 const app = express();
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-const model = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash"
-});
 
 // ✅ FIX 1: middleware
 app.use(cors({
@@ -34,11 +36,6 @@ const Confession = mongoose.model("Confession", {
 // ================= ROUTES =================
 
 // 🔥 TEST ROUTE (IMPORTANT)
-app.get("/test", (req, res) => {
-  res.json({ msg: "Server working ✅" });
-});
-
-// 🤖 CHAT (NO AI for now → debugging first)
 app.post("/api/chat", async (req, res) => {
   try {
     const userMsg = req.body.message;
@@ -60,13 +57,15 @@ Simi:
 `;
 
     const result = await model.generateContent(prompt);
-    const response = result.response.text();
 
-    res.json({ reply: response });
+    // 🔥 FIXED extraction
+    const reply = result.response.candidates[0].content.parts[0].text;
+
+    res.json({ reply });
 
   } catch (err) {
-    console.log(err);
-    res.json({ reply: "Ugh… something broke. Try again 😒" });
+    console.log("AI ERROR:", err);
+    res.json({ reply: "Hmm… I’m thinking, try again 😏" });
   }
 });
 
