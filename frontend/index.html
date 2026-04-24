@@ -100,7 +100,7 @@
 
 <script>
 
-const API = "https://simi-ai-world-2.onrender.com"; // 🔴 change if needed
+const API = "https://simi-ai-world1.onrender.com"; // 🔴 change if needed
 
 function addMessage(text, type) {
   const chat = document.getElementById("chat");
@@ -118,6 +118,9 @@ async function send() {
   addMessage(msg, "user");
 
   try {
+    // 👉 show typing
+    addMessage("Typing...", "bot");
+
     const res = await fetch(API + "/api/chat", {
       method: "POST",
       headers: {
@@ -128,9 +131,11 @@ async function send() {
 
     const data = await res.json();
 
-    setTimeout(() => {
-      addMessage(data.reply, "bot");
-    }, 800);
+    // 👉 remove "Typing..."
+    document.getElementById("chat").lastChild.remove();
+
+    // 👉 show real reply
+    addMessage(data.reply, "bot");
 
   } catch {
     addMessage("Server error ❌", "bot");
@@ -138,6 +143,7 @@ async function send() {
 
   document.getElementById("msg").value = "";
 }
+
 
 async function sendConfession() {
   const text = document.getElementById("confession").value;
